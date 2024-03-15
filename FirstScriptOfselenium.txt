@@ -1,0 +1,63 @@
+package SeleniumScripts;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class FirstScriptofSelenium {
+
+	public static void main(String[] args) {
+
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-notifications");
+		WebDriver driver = new ChromeDriver(options);
+
+		driver.get("https://www.facebook.com/");
+		WebElement emailId = driver.findElement(By.name("email"));
+		String emailUserName = emailId.toString();
+		if (emailUserName.isEmpty()) {
+			emailId.sendKeys("9966902222");
+		} else {
+			emailId.clear();
+			System.out.println("edit field cleared.");
+			emailId.sendKeys("9966902222");
+		}
+
+		WebElement passWord = driver.findElement(By.id("pass"));
+
+		String passWrodEditField = passWord.toString();
+		if (passWrodEditField.isEmpty()) {
+			passWord.sendKeys("Athulith@93");
+
+		} else {
+			passWord.clear();
+			System.out.println("Password edit field cleared.");
+			passWord.sendKeys("Athulith@93");
+
+		}
+
+		WebElement login = driver.findElement(By.name("login"));
+		login.click();
+
+		driver.manage().timeouts().getImplicitWaitTimeout();
+
+		WebElement image = driver.findElement(
+				By.xpath("//*[name()='g' and contains(@mask,'url(#:Rqir')]//*[name()='image' and contains(@x,'0')]"));
+
+		if (image.isDisplayed()) {
+			System.out.println("logged in");
+			image.click();
+			driver.findElement(By.xpath("//span[normalize-space()='Log Out']")).click();
+			System.out.println("Log out successfully");
+			driver.navigate().refresh();
+			System.out.println("page refreshed");
+			ReusableMethods.quit(driver);
+		} else {
+			System.out.println("log in failed");
+		}
+
+	}
+
+}
